@@ -1,13 +1,14 @@
 package main
 
 import (
-	"advent2015/pkg/file"
 	"crypto/md5"
 	"encoding/hex"
 	"fmt"
 	"path/filepath"
 	"strconv"
 	"strings"
+
+	"advent2015/pkg/file"
 )
 
 func getMD5Hash(text string) string {
