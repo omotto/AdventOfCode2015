@@ -1,10 +1,11 @@
 package main
 
 import (
-	"advent2015/pkg/file"
 	"fmt"
 	"path/filepath"
 	"strconv"
+
+	"advent2015/pkg/file"
 )
 
 const (

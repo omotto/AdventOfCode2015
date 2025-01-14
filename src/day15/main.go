@@ -1,9 +1,10 @@
 package main
 
 import (
-	"advent2015/pkg/file"
 	"fmt"
 	"path/filepath"
+
+	"advent2015/pkg/file"
 )
 
 type Specs struct {
