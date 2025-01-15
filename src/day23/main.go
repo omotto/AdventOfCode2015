@@ -2,59 +2,59 @@ package main
 
 import (
 	"fmt"
-	"math"
 	"path/filepath"
-	"slices"
 	"strconv"
+	"strings"
 
 	"advent2015/pkg/file"
 )
 
-func findMultiples(v int) []int {
-	var multiple []int
-	for c := 1; c <= int(math.Sqrt(float64(v))); c++ {
-		if v%c == 0 {
-			multiple = append(multiple, c, v/c)
-		}
-	}
-	slices.Sort(multiple)
-	return slices.Compact(multiple)
-}
-
-func getHouseNumber(s string) int {
-	value, _ := strconv.Atoi(s)
-	for house := 1; house < value; house++ {
-		currentValue := 0
-		for _, m := range findMultiples(house) {
-			currentValue += m * 10
-		}
-		if currentValue >= value {
-			return house
-		}
-	}
-	return 0
-}
-
-func getHouseNumber2(s string) int {
-	value, _ := strconv.Atoi(s)
-	for house := 1; house < value; house++ {
-		currentValue := 0
-		for _, m := range findMultiples(house) {
-			if house/m <= 50 {
-				currentValue += m * 11
+func getRegisterB(s []string, registerA int) int {
+	registers := map[string]int{"a": registerA, "b": 0}
+	pc := 0
+	for pc >= 0 && pc < len(s) {
+		// Get
+		instruction := s[pc]
+		// Decode + Execute
+		parts := strings.Split(instruction, " ")
+		switch parts[0] {
+		case "hlf":
+			registers[parts[1]] /= 2
+			pc++
+		case "tpl":
+			registers[parts[1]] *= 3
+			pc++
+		case "inc":
+			registers[parts[1]] += 1
+			pc++
+		case "jmp":
+			num, _ := strconv.Atoi(parts[1])
+			pc += num
+		case "jie":
+			register := registers[parts[1][:len(parts[1])-1]]
+			num, _ := strconv.Atoi(parts[2])
+			if register%2 == 0 {
+				pc += num
+			} else {
+				pc++
+			}
+		case "jio":
+			register := registers[parts[1][:len(parts[1])-1]]
+			num, _ := strconv.Atoi(parts[2])
+			if register == 1 {
+				pc += num
+			} else {
+				pc++
 			}
 		}
-		if currentValue >= value {
-			return house
-		}
 	}
-	return 0
+	return registers["b"]
 }
 
 func main() {
-	absPathName, _ := filepath.Abs("src/day20/input.txt")
+	absPathName, _ := filepath.Abs("src/day23/input.txt")
 	output, _ := file.ReadInput(absPathName)
 
-	fmt.Println(getHouseNumber(output[0]))
-	fmt.Println(getHouseNumber2(output[0]))
+	fmt.Println(getRegisterB(output, 0))
+	fmt.Println(getRegisterB(output, 1))
 }
