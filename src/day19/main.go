@@ -1,12 +1,13 @@
 package main
 
 import (
-	"advent2015/pkg/file"
 	"fmt"
 	"math/rand"
 	"path/filepath"
 	"strings"
 	"time"
+
+	"advent2015/pkg/file"
 )
 
 type Replacement struct {
