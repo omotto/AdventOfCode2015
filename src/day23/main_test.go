@@ -25,7 +25,7 @@ func TestGetHouseNumber(t *testing.T) {
 	}
 	for _, tc := range tcs {
 		t.Run(tc.desc, func(t *testing.T) {
-			got := getRegisterB(tc.input)
+			got := getRegisterB(tc.input, 0)
 			if diff := cmp.Diff(tc.expectedVal, got); diff != "" {
 				t.Errorf("sum has diff %s", diff)
 			}
