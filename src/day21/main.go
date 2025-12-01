@@ -17,9 +17,9 @@ const playerHitPoints = 100
 // -- SHOP 			Cost  Damage  Armor
 
 const (
-	COST    = 0
-	DAMAGE  = 1
-	DEFENSE = 2
+	COST   = 0
+	DAMAGE = 1
+	ARMOR  = 2
 )
 
 var (
@@ -83,10 +83,10 @@ func getMinCost(s []string) int {
 		for _, armor := range Armor {
 			for _, ring1 := range Rings {
 				for _, ring2 := range Rings {
-					cost := weapon[COST] + armor[COST] + ring1[COST] + ring2[COST]
-					damage := weapon[DAMAGE] + armor[DAMAGE] + ring1[DAMAGE] + ring2[DAMAGE]
-					defense := weapon[DEFENSE] + armor[DEFENSE] + ring1[DEFENSE] + ring2[DEFENSE]
-					combinations = append(combinations, []int{cost, damage, defense})
+					totalCost := weapon[COST] + armor[COST] + ring1[COST] + ring2[COST]
+					totalDamage := weapon[DAMAGE] + armor[DAMAGE] + ring1[DAMAGE] + ring2[DAMAGE]
+					totalArmor := weapon[ARMOR] + armor[ARMOR] + ring1[ARMOR] + ring2[ARMOR]
+					combinations = append(combinations, []int{totalCost, totalDamage, totalArmor})
 				}
 			}
 		}
@@ -95,7 +95,7 @@ func getMinCost(s []string) int {
 	minCost := MaxInt
 	for _, combination := range combinations {
 		playerDamage := combination[DAMAGE]
-		playerArmor := combination[DEFENSE]
+		playerArmor := combination[ARMOR]
 		winner := play(playerHitPoints, playerDamage, playerArmor, enemyHitPoints, enemyDamage, enemyArmor)
 		if winner && combination[COST] < minCost {
 			minCost = combination[COST]
@@ -115,10 +115,10 @@ func getMaxCost(s []string) int {
 		for _, armor := range Armor {
 			for _, ring1 := range Rings {
 				for _, ring2 := range Rings {
-					cost := weapon[COST] + armor[COST] + ring1[COST] + ring2[COST]
-					damage := weapon[DAMAGE] + armor[DAMAGE] + ring1[DAMAGE] + ring2[DAMAGE]
-					defense := weapon[DEFENSE] + armor[DEFENSE] + ring1[DEFENSE] + ring2[DEFENSE]
-					combinations = append(combinations, []int{cost, damage, defense})
+					totalCost := weapon[COST] + armor[COST] + ring1[COST] + ring2[COST]
+					totalDamage := weapon[DAMAGE] + armor[DAMAGE] + ring1[DAMAGE] + ring2[DAMAGE]
+					totalArmor := weapon[ARMOR] + armor[ARMOR] + ring1[ARMOR] + ring2[ARMOR]
+					combinations = append(combinations, []int{totalCost, totalDamage, totalArmor})
 				}
 			}
 		}
@@ -127,7 +127,7 @@ func getMaxCost(s []string) int {
 	maxCost := 0
 	for _, combination := range combinations {
 		playerDamage := combination[DAMAGE]
-		playerArmor := combination[DEFENSE]
+		playerArmor := combination[ARMOR]
 		winner := play(playerHitPoints, playerDamage, playerArmor, enemyHitPoints, enemyDamage, enemyArmor)
 		if !winner && combination[COST] > maxCost {
 			maxCost = combination[COST]
